@@ -1,0 +1,31 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure('2') do |config|
+  config.vm.box = 'cloud-image/debian-12'
+
+  config.vm.box_check_update = false
+
+  # config.vm.network 'forwarded_port', guest: 80, host: 8080
+  # config.vm.network 'forwarded_port', guest: 80, host: 8080, host_ip: '127.0.0.1'
+
+  # config.vm.synced_folder './data', '/data'
+  config.vm.synced_folder '~/shared', '/shared'
+  config.vm.synced_folder '.', '/vagrant', disabled: true
+
+  config.vm.provider :libvirt do |libvirt|
+    libvirt.cpus = 4
+    libvirt.cputopology :sockets => '1', :cores => '2', :threads => '2'
+    libvirt.memory = 16384
+
+    libvirt.machine_virtual_size = 35
+
+    libvirt.cpu_model = 'host-passthrough'
+  end
+
+  config.vm.provision 'file', source: '~/.ssh/id_rsa', destination: '.ssh/id_rsa'
+  config.vm.provision 'file', source: '~/.ssh/id_rsa.pub', destination: '.ssh/id_rsa.pub'
+
+  config.vm.provision 'shell', path: 'provision-root.sh'
+  config.vm.provision 'shell', path: 'provision-user.sh', privileged: false
+end
