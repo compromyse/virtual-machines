@@ -1,9 +1,12 @@
 services:
   main:
-    build: .
+    build:
+      context: ../../
+      dockerfile: containers/debian/Dockerfile
     stdin_open: true
     tty: true
     volumes:
+      - ~/.ssh:/home/compromyse/.ssh
       - ~/shared:/shared
     deploy:
       resources:
