@@ -1,0 +1,12 @@
+services:
+  main:
+    build: .
+    stdin_open: true
+    tty: true
+    volumes:
+      - ~/shared:/shared
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 56gb
