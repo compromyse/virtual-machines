@@ -12,6 +12,7 @@ WORKDIR /home/compromyse
 
 ENV USER=compromyse
 ENV CONFIG=d
+ENV TERM=screen-256color-bce
 
 RUN mkdir ~/.ssh
 RUN --mount=type=secret,id=id_rsa,required sudo cp /run/secrets/id_rsa ~/.ssh/id_rsa
@@ -21,4 +22,4 @@ RUN sudo chown compromyse:compromyse ~/.ssh/id_rsa ~/.ssh/id_rsa.pub
 COPY scripts/provision-user.sh /tmp/provision-user.sh
 RUN bash /tmp/provision-user.sh
 
-CMD [ "cat" ]
+CMD [ "bash" ]
