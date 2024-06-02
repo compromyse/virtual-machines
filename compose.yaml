@@ -15,7 +15,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '4'
+          cpus: '14'
 
 secrets:
   id_rsa:

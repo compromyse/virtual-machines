@@ -11,14 +11,14 @@ Vagrant.configure('2') do |config|
 
   # config.vm.synced_folder './data', '/data'
   config.vm.synced_folder '~/shared', '/shared', type: '9p', disabled: false, accessmode: 'mapped'
-  config.vm.synced_folder '.', '/vagrant', disabled: true, type: '9p', disabled: false, accessmode: 'mapped'
+  config.vm.synced_folder '.', '/vagrant', type: '9p', disabled: false, accessmode: 'mapped'
 
   config.vm.provider :libvirt do |libvirt|
-    libvirt.cpus = 4
-    libvirt.cputopology :sockets => '1', :cores => '2', :threads => '2'
-    libvirt.memory = 16384
+    libvirt.cpus = 14
+    libvirt.cputopology :sockets => '1', :cores => '7', :threads => '2'
+    libvirt.memory = 57344
 
-    libvirt.machine_virtual_size = 35
+    libvirt.machine_virtual_size = 120
 
     libvirt.cpu_model = 'host-passthrough'
   end
