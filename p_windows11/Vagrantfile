@@ -33,19 +33,21 @@ Vagrant.configure('2') do |config|
     libvirt.cpu_model = 'host-passthrough'
   end
 
-  # config.trigger.before :up do |t|
-  #   t.info = "Binding to VFIO"
-  #   t.run = {
-  #     path: '../scripts/bind-vfio.sh'
-  #   }
-  # end
-  #
-  # [ :destroy, :halt ].each do |action|
-  #   config.trigger.after action do |t|
-  #     t.info = "Unbinding VFIO"
-  #     t.run = {
-  #       path: '../scripts/unbind-vfio.sh'
-  #     }
-  #   end
-  # end
+  config.vm.provision 'shell', path: '../scripts/provision-win.bat'
+
+  config.trigger.before :up do |t|
+    t.info = "Binding to VFIO"
+    t.run = {
+      path: '../scripts/bind-vfio.sh'
+    }
+  end
+
+  [ :destroy, :halt ].each do |action|
+    config.trigger.after action do |t|
+      t.info = "Unbinding VFIO"
+      t.run = {
+        path: '../scripts/unbind-vfio.sh'
+      }
+    end
+  end
 end
