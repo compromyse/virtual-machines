@@ -2,6 +2,8 @@
 
 set -xe
 
+CONFIG=vm
+
 sh <(curl -L https://nixos.org/nix/install) --no-daemon
 
 . "$HOME/.nix-profile/etc/profile.d/nix.sh"
@@ -9,12 +11,11 @@ sh <(curl -L https://nixos.org/nix/install) --no-daemon
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 nix-channel --update
 
-nix-shell '<home-manager>' -A install
+nix-shell "<home-manager>" -A install
 . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
-ssh-keyscan github.com >> ~/.ssh/known_hosts
-git clone git@github.com:compromyse/dotfiles $HOME/.config/home-manager/dotfiles
-git clone git@github.com:tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+git clone https://github.com/compromyse/dotfiles $HOME/.config/home-manager/dotfiles
+git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
 
 rm $HOME/.config/home-manager/home.nix
 ln -s $HOME/.config/home-manager/dotfiles/machines/$CONFIG/home.nix $HOME/.config/home-manager/home.nix
