@@ -32,7 +32,7 @@ virt-builder debian-12 \
 sudo virt-install --import \
   --os-variant debian12 \
   --name $VM_NAME \
-  --ram 2048 \
+  --ram 8192 \
   --cpu host-passthrough,cache.mode=passthrough \
   --vcpus 4,sockets=1,cores=2,threads=2 \
   --disk path=imgs/$VM_NAME.img,format=raw,bus=virtio \
