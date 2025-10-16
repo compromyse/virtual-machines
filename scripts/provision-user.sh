@@ -14,7 +14,7 @@ nix-channel --update
 nix-shell "<home-manager>" -A install
 . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
-git clone https://github.com/compromyse/dotfiles $HOME/.config/home-manager/dotfiles
+git clone https://git.compromyse.xyz/me/dotfiles.git $HOME/.config/home-manager/dotfiles
 git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
 
 rm $HOME/.config/home-manager/home.nix
