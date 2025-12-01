@@ -1,19 +1,20 @@
 #!/usr/bin/env bash
 
-if [ "$#" -ne 2 ]; then
-    echo "Usage: $0 [vm_name] [ip_addr:192.168.122.x]"
+if [ "$#" -ne 3 ]; then
+    echo "Usage: $0 [vm_name] [ip_addr:192.168.122.x] [size (GB)]"
     exit
 fi
 
 VM_NAME="$1"
 IP_ADDR="$2"
+SIZE="$3"
 AMD_GPU_RENDERNODE="/dev/dri/by-path/pci-0000:05:00.0-render"
 
 set -xe
 
-virt-builder debian-12 \
+virt-builder debian-13 \
   -o imgs/$VM_NAME.img \
-  --size 35G \
+  --size "$SIZE"G \
   --hostname $VM_NAME \
   -m 4096 --smp 4 \
   --run-command "ssh-keygen -A" \
@@ -30,7 +31,7 @@ virt-builder debian-12 \
   --write "/etc/resolv.conf:nameserver 8.8.8.8"
 
 sudo virt-install --import \
-  --os-variant debian12 \
+  --os-variant debian13 \
   --name $VM_NAME \
   --ram 8192 \
   --cpu host-passthrough,cache.mode=passthrough \
